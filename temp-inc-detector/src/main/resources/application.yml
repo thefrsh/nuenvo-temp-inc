@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: 'temp-inc-detector'
+server:
+  port: 8081
