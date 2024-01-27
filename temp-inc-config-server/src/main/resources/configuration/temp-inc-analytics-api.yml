@@ -1,0 +1,15 @@
+spring:
+  data:
+    rest:
+      detection-strategy: annotated
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+server:
+  port: 8083
+  error:
+    include-message: always
+  servlet:
+    context-path: '/api'
+springdoc:
+  show-actuator: false

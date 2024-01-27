@@ -1,19 +1,7 @@
+project:
+  version: @project.version@
 spring:
   application:
     name: 'temp-inc-analytics-api'
-  data:
-    rest:
-      detection-strategy: annotated
-  jackson:
-    serialization:
-      INDENT_OUTPUT: true
-project:
-  version: @project.version@
-server:
-  port: 8083
-  error:
-    include-message: always
-  servlet:
-    context-path: '/api'
-springdoc:
-  show-actuator: false
+  config:
+    import: 'configserver:http://localhost:8888'
