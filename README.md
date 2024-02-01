@@ -66,6 +66,11 @@ may be persisted many times as it's included many times in one window. I wasn't 
 so I decided to stick to that implementation, but I was thinking about persisting only distinct anomalies
 or implementing a hopping window as well to not include those same values for the average calculation twice or more.
 
+The other thing is a 'connection' between Generators and the database. In the following solution only one Generator
+is created and its representation in the database is persisted as an initial seed. In some more advanced solution
+some mechanism to support dynamically created Generators would be required,
+like: NewGeneratorEvent emit -> ID-assignment in return, but I am not sure if it was in the scope of this task.
+
 Due to various factors (technical and non-technical), the application has implemented only basic integration tests
 for the REST API, which can be found in the `temp-inc-analytics-api` module.
 In other words - my spare time allowed me to do only that much, sorry.
