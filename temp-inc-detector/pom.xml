@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.nuenvo</groupId>
         <artifactId>nuenvo-temp-inc</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0.TEMPINC</version>
     </parent>
 
     <groupId>com.nuenvo.tempinc</groupId>
@@ -17,6 +17,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-kafka-streams</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.nuenvo.tempinc</groupId>
+            <artifactId>shared-kernel</artifactId>
+            <version>${shared-kernel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nuenvo.tempinc</groupId>
+            <artifactId>temp-inc-common</artifactId>
+            <version>${temp-inc-common.version}</version>
+        </dependency>
     </dependencies>
-
 </project>
