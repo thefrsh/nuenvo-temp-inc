@@ -1,0 +1,27 @@
+project:
+  version: @project.version@
+spring:
+  application:
+    name: 'temp-inc-analytics-api'
+  config:
+    import:
+      - 'classpath:.env[.properties]'
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  data:
+    rest:
+      detection-strategy: all
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+server:
+  port: 8083
+  error:
+    include-message: always
+  servlet:
+    context-path: '/api'
+springdoc:
+  show-actuator: false

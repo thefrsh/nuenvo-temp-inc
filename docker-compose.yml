@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+  zookeeper-temp-task:
+    image: confluentinc/cp-zookeeper:7.4.0
+    hostname: zookeeper-temp-task
+    container_name: zookeeper-temp-task
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker-temp-task:
+    image: confluentinc/cp-kafka:7.4.0
+    hostname: broker-temp-task
+    container_name: broker-temp-task
+    depends_on:
+      - zookeeper-temp-task
+    ports:
+      - '29092:29092'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-temp-task:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker-temp-task:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_TOOLS_LOG4J_LOGLEVEL: ERROR
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+  db:
+    image: postgres:16
+    container_name: temp-inc-db
+    hostname: temp-inc-db
+    ports:
+      - '5432:5432'
+    env_file:
+      - temp-inc-storage/src/main/resources/.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: on-failure
+volumes:
+  postgres_data:

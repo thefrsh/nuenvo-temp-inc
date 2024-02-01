@@ -1,0 +1,49 @@
+spring:
+  kafka:
+    streams:
+      properties:
+        spring:
+          json:
+            use:
+              type:
+                headers: false
+  application:
+    name: 'temp-inc-detector'
+  cloud:
+    function:
+      definition: 'processor'
+    stream:
+      kafka:
+        streams:
+          binder:
+            deserialization-exception-handler: 'logandcontinue'
+            functions:
+              processor:
+                application-id: ${spring.application.name}
+      bindings:
+        processor-in-0:
+          content-type: 'application/json'
+          destination: 'readings'
+          binder: 'kafka'
+        processor-out-0:
+          content-type: 'application/json'
+          destination: 'anomalies'
+          binder: 'kafka'
+      binders:
+        kafka:
+          type: 'kstream'
+          environment:
+            spring:
+              cloud:
+                stream:
+                  kafka:
+                    streams:
+                      binder:
+                        brokers: 'localhost:29092'
+server:
+  port: 8081
+anomaly:
+  detector:
+    algorithm: 'count-window'
+    max-deviation: 5
+    window-size: 10
