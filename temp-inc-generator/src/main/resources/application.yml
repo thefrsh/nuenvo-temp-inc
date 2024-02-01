@@ -1,5 +1,30 @@
 spring:
+  kafka:
+    streams:
+      properties:
+        spring:
+          json:
+            use:
+              type:
+                headers: false
   application:
     name: 'temp-inc-generator'
-  config:
-    import: 'configserver:http://localhost:8888'
+  cloud:
+    function:
+      definition: 'source'
+    stream:
+      kafka:
+        binder:
+          brokers: 'localhost:29092'
+      bindings:
+        source-out-0:
+          content-type: 'application/json'
+          destination: 'readings'
+          group: ${spring.application.name}
+          producer:
+            partition-key-expression: headers['partition-id']
+  integration:
+    poller:
+      fixed-delay: 1000
+server:
+  port: 8080
