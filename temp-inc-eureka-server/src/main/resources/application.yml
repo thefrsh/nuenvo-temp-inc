@@ -1,5 +1,0 @@
-spring:
-  application:
-    name: 'temp-inc-eureka-server'
-  config:
-    import: 'configserver:http://localhost:8888'
