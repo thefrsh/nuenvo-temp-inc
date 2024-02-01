@@ -1,7 +1,75 @@
 spring:
+  kafka:
+    streams:
+      properties:
+        spring:
+          json:
+            use:
+              type:
+                headers: false
   application:
     name: 'temp-inc-storage'
   config:
     import:
-    - 'configserver:http://localhost:8888'
     - 'classpath:.env[.properties]'
+  cloud:
+    function:
+      definition: 'sink'
+    stream:
+      kafka:
+        streams:
+          binder:
+            deserialization-exception-handler: 'logandcontinue'
+            functions:
+              processor:
+                application-id: ${spring.application.name}
+      bindings:
+        sink-in-0:
+          destination: 'anomalies'
+          content-type: 'application/json'
+          binder: 'kafka'
+      binders:
+        kafka:
+          type: 'kstream'
+          environment:
+            spring:
+              cloud:
+                stream:
+                  kafka:
+                    streams:
+                      binder:
+                        brokers: 'localhost:29092'
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        generate_statistics: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 20
+flyway:
+  url: ${spring.datasource.url}
+  user: ${spring.datasource.username}
+  password: ${spring.datasource.password}
+  driver-class-name: ${spring.datasource.driver-class-name}
+  baseline-on-migrate: true
+logging:
+  level:
+    org:
+      hibernate:
+        engine:
+          jdbc:
+            spi:
+              SqlExceptionHelper: off
+            batch:
+              internal:
+                BatchingBatch: off
+server:
+  port: 8082

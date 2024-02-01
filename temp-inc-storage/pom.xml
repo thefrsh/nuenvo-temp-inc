@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.nuenvo</groupId>
         <artifactId>nuenvo-temp-inc</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0.TEMPINC</version>
     </parent>
 
     <groupId>com.nuenvo.tempinc</groupId>
@@ -16,6 +16,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-kafka-streams</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -29,6 +33,26 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.nuenvo.tempinc</groupId>
+            <artifactId>shared-kernel</artifactId>
+            <version>${shared-kernel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nuenvo.tempinc</groupId>
+            <artifactId>temp-inc-common</artifactId>
+            <version>${temp-inc-common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper-module-record</artifactId>
+            <version>${modelmapper-module-record.version}</version>
         </dependency>
     </dependencies>
 </project>
