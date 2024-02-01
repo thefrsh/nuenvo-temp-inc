@@ -40,7 +40,7 @@ Those shall be run using Docker-Compose before the application is started.
 * temp-inc-generator - in the application properties you can change `spring.integration.polling`
 if you want the generator to publish messages at different rate
 * temp-inc-detector - in the application properties you can change `anomalies.detector.algorithm` to switch between
-two implementations to detect anomalies: `count-based` (default) or `time-based`. Except of that, you can change
+two implementations of detecting anomalies: `count-based` (default) or `time-based`. Except of that, you can change
 the maximum acceptable `deviation` and `window-size` (a range of readings/time that the average is calculated for).
 
 ### Maven modules
@@ -61,10 +61,10 @@ The application provides a very basic REST API described in the requirements of 
 
 ### Implementation note
 
-The algorithms used to detect anomalies works as a sliding window advancing by 1 element. It means that one anomaly
+The algorithms used to detect anomalies work as a sliding window advancing by 1 element. It means that one anomaly
 may be persisted many times as it's included many times in one window. I wasn't sure about that requirement,
 so I decided to stick to that implementation, but I was thinking about persisting only distinct anomalies
-or implementing a hopping window as well to not include those same values for the average calculation twice.
+or implementing a hopping window as well to not include those same values for the average calculation twice or more.
 
 Due to various factors (technical and non-technical), the application has implemented only basic integration tests
 for the REST API, which can be found in the `temp-inc-analytics-api` module.
